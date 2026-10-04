@@ -27,8 +27,17 @@ public class VehiculoDocumento {
     @Column(name = "fecha_vencimiento", nullable = false)
     private LocalDate fechaVencimiento;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+    		check = @CheckConstraint(name = "chk_estado_documento", constraint = "estado IN ('Habilitado','Vencido','En Verificación')"))
     private String estado;
+
+    // Seguridad
+
+    @Lob
+    @Column(name = "archivo_pdf", columnDefinition = "LONGBLOB")
+    private byte[] archivoPdf; // Almacena el binario o la cadena Base64 decodificada
+
+    // Demás atributos (vehiculo, documento, fechas, etc.)
 
     // Constructors
     public VehiculoDocumento() {}
